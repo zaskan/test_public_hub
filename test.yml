@@ -2,7 +2,7 @@
 - hosts: all
   collections:
   # Install a collection from Ansible Galaxy.
-  - name: ansible.tower
+  - ansible.tower
   tasks:
   
   - name: Add tower host
