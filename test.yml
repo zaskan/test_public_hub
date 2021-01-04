@@ -4,9 +4,8 @@
   collections:
   - ansible.posix
   tasks:
-
-  - name: Obtain the ACL for a specific file
-    ansible.posix.acl:
-      path: /etc/inputrc
-    register: acl_info
-    become: true
+    - name: Obtain the ACL for a specific file
+      ansible.posix.acl:
+        path: /etc/inputrc
+      register: acl_info
+      become: true
