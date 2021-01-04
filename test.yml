@@ -1,0 +1,5 @@
+---
+- hosts: all
+  collections:
+  # Install a collection from Ansible Galaxy.
+  - name: ansible.tower
