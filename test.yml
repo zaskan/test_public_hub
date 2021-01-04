@@ -1,16 +1,29 @@
 ---
 - hosts: all
+  connection: httpapi
   collections:
-  # Install a collection from Ansible Galaxy.
-  - ansible.tower
+  - fortinet.fortios
+  vars:
+    ansible_httpapi_use_ssl: yes
+    ansible_httpapi_validate_certs: no
+    ansible_httpapi_port: 443
+    vdom: "root"
+    object_name: "TEST-TEST"
+    object_ip: "200.200.200.200"
+    object_comment: "TEST-TEST"
   tasks:
-  
-  - name: Add tower host
-    tower_host:
-      name: localhost
-      description: "Local Host Group"
-      inventory: "Local Inventory"
-      state: present
-      tower_config_file: "~/tower_cli.cfg"
-      variables:
-        example_var: 123
+
+    - name: Get facts
+      fortios_facts:
+        vdom:  "{{ vdom }}"
+        gather_subset:
+          - fact: 'system_status_select'
+
+    - name: Configure global attributes.
+      fortios_firewall_address:
+          vdom: "{{ vdom }}"
+          state: "present"
+          firewall_address:
+            name: "{{ object_name }}"
+            subnet: "{{ object_ip }} "
+            comment: "{{ object_comment }}"
